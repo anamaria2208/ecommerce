@@ -5,16 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-    public class DbInitializer
+    public static class DbInitializer
     {
-        public DbInitializer(ModelBuilder modelBuilder)
+        public static void Initialize(StoreContext context)
         {
-            this.modelBuilder = modelBuilder;
-        }
-        private readonly ModelBuilder modelBuilder;
-       public void Initialize()
-       {
-            modelBuilder.Entity<Product>().HasData(
+            if (context.Products.Any()) return;
+            var products = new List<Product>() {
+
                 new Product
                 {
                     Id = 1,
@@ -228,10 +225,9 @@ namespace API.Data
                     Brand = "Angular",
                     Type = "Boots",
                     QuantityInStock = 100
-                });
-            
-
-       }
-
+                }};
+            context.Products.AddRange(products);
+            context.SaveChanges();
+        }
     }
 }

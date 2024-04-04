@@ -15,7 +15,7 @@ namespace API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            new DbInitializer(modelBuilder).Initialize();
+            
         }
 
 

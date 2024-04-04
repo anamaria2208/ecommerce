@@ -1,30 +1,27 @@
-import { Avatar, Button, List, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Product } from "../../app/models/product";
+import ProductList from "./ProductList";
+import axios from "axios";
 
-interface Props {
-  products: Product[];
-  addNewProduct: () => void;
-}
 
-const Catalog = ({ products, addNewProduct }: Props) => {
+const Catalog = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("https://localhost:5100/api/products");
+        setProducts(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
   return (
-    <>
-      <List>
-        {products.map((product: Product) => (
-          <ListItem key={product.id}>
-            <ListItemAvatar>
-              <Avatar src={product.pictureUrl} />
-            </ListItemAvatar>
-            <ListItemText>
-                {product.name}
-            </ListItemText>
-          </ListItem>
-        ))}
-      </List>
-      <Button variant="contained" onClick={addNewProduct}>
-        Add new Product
-      </Button>
-    </>
+      <ProductList products={products}/>
+
   );
 };
 
