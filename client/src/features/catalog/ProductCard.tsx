@@ -10,14 +10,13 @@ import {
 } from "@mui/material";
 import { Product } from "../../app/models/product";
 import { purple } from "@mui/material/colors";
+import {  Link } from "react-router-dom";
 
 interface Props {
   product: Product;
 }
 
 const ProductCard = ({ product }: Props) => {
-  
-
   return (
     <>
       <Card sx={{ height: 370 }}>
@@ -28,9 +27,12 @@ const ProductCard = ({ product }: Props) => {
             </Avatar>
           }
           title={product.name}
-          titleTypographyProps={{ sx : {
-            color : '#9c27b0', fontWeight : 'fontWeightMedium'
-          } }}
+          titleTypographyProps={{
+            sx: {
+              color: "#9c27b0",
+              fontWeight: "fontWeightMedium",
+            },
+          }}
         />
         <CardMedia
           sx={{
@@ -56,7 +58,14 @@ const ProductCard = ({ product }: Props) => {
         </CardContent>
         <CardActions>
           <Button size="medium">ADD TO CHART</Button>
-          <Button size="medium">VIEW</Button>
+          <Button
+            size="medium"
+            component={Link}
+            to={`/catalog/${product.id}`} 
+            color="primary"
+          >
+            VIEW
+          </Button>
         </CardActions>
       </Card>
     </>
